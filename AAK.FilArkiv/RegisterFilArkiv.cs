@@ -1,8 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace AAK.FilArkiv;
 
-public record FilArkivOptions(string BaseAddress, string ClientId, string ClientSecret, string AuthenticationUrl);
+public record FilArkivOptions(string BaseAddress, string ClientId, string ClientSecret, string AuthenticationBaseUrl);
 
 public static class RegisterFilArkiv
 {
@@ -13,14 +14,20 @@ public static class RegisterFilArkiv
         if (string.IsNullOrWhiteSpace(options.BaseAddress)) throw new ArgumentNullException(nameof(options.BaseAddress));
         if (string.IsNullOrWhiteSpace(options.ClientId)) throw new ArgumentNullException(nameof(options.ClientId));
         if (string.IsNullOrWhiteSpace(options.ClientSecret)) throw new ArgumentNullException(nameof(options.ClientSecret));
-        if (string.IsNullOrWhiteSpace(options.AuthenticationUrl)) throw new ArgumentNullException(nameof(options.AuthenticationUrl));
+        if (string.IsNullOrWhiteSpace(options.AuthenticationBaseUrl)) throw new ArgumentNullException(nameof(options.AuthenticationBaseUrl));
 
         services.AddHttpClient(CLIENT_NAME, client =>
         {
             client.BaseAddress = new Uri(options.BaseAddress);
         });
 
-        services.AddSingleton<AuthenticationService>();
+        services.AddSingleton(serviceProvider =>
+        {
+            var factory = serviceProvider.GetRequiredService<IHttpClientFactory>();
+            var client = factory.CreateClient(CLIENT_NAME);
+
+            return new AuthenticationService(client, options.AuthenticationBaseUrl, options.ClientId, options.ClientSecret);
+        });
 
         services.AddTransient<IFilArkiv>(serviceProvider =>
         {

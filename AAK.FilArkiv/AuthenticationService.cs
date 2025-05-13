@@ -5,7 +5,7 @@ namespace AAK.FilArkiv;
 internal class AuthenticationService
 {
     private readonly HttpClient _httpClient;
-    private readonly string _authenticationUrl;
+    private readonly string _authenticationBaseUrl;
     private readonly string _clientId;
     private readonly string _clientSecret;
 
@@ -18,10 +18,10 @@ internal class AuthenticationService
         public int Expires { get; set; }
     }
 
-    public AuthenticationService(HttpClient httpClient, string authenticationUrl, string clientId, string clientSecret)
+    public AuthenticationService(HttpClient httpClient, string authenticationBaseUrl, string clientId, string clientSecret)
     {
         _httpClient = httpClient;
-        _authenticationUrl = authenticationUrl;
+        _authenticationBaseUrl = authenticationBaseUrl;
         _clientId = clientId;
         _clientSecret = clientSecret;
     }
@@ -47,11 +47,13 @@ internal class AuthenticationService
             { "client_secret", _clientSecret }
         });
 
+
+        var url = new Uri($"{_authenticationBaseUrl}{_clientId}(login)/oauth/token", UriKind.Absolute); // https://login.jo-informatik.dk/jo-informatik/fa-production/aarhus_sa_bvfeozetdlcehpa(login)/oauth/token
         var request = new HttpRequestMessage
         {
             Method = HttpMethod.Post,
             Content = content,
-            RequestUri = new Uri(_authenticationUrl, UriKind.Absolute)
+            RequestUri = url
         };
 
         var response = await _httpClient.SendAsync(request, cancellationToken);
