@@ -58,7 +58,6 @@ internal class FilArkivClient : IFilArkiv
                 documents.Add(new Document
                 {
                     Id = dto.Id,
-                    CaseId = dto.CaseId,
                     DocumentDate = dto.DocumentDate,
                     DocumentNumber = dto.DocumentNumber,
                     Title = dto.Title,

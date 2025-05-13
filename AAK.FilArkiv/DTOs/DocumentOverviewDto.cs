@@ -7,14 +7,11 @@ internal record DocumentOverviewDto
     [JsonPropertyName("id")]
     public Guid Id { get; set; }
 
-    [JsonPropertyName("caseId")]
-    public Guid CaseId { get; set; }
-
     [JsonPropertyName("title")]
     public string Title { get; set; } = default!;
 
     [JsonPropertyName("documentNumber")]
-    public int DocumentNumber { get; set; }
+    public int? DocumentNumber { get; set; }
 
     [JsonPropertyName("documentDate")]
     public DateTime? DocumentDate { get; set; }
