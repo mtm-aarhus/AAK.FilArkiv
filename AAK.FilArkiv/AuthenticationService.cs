@@ -31,7 +31,7 @@ internal class AuthenticationService
         if (TokenCache.Instance.ExpiresAt < DateTime.UtcNow.AddMinutes(-3)
             || string.IsNullOrWhiteSpace(TokenCache.Instance.Token))
         {
-            await GetToken();
+            await GetToken(cancellationToken);
         }
 
         return TokenCache.Instance.Token;
