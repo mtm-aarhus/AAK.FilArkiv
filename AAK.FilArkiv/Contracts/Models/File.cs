@@ -1,4 +1,4 @@
-﻿namespace AAK.FilArkiv.Models;
+﻿namespace AAK.FilArkiv.Contracts.Models;
 public record File
 {
     public Guid Id { get; set; }

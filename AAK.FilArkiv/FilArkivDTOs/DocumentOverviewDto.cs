@@ -1,7 +1,8 @@
 ﻿using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
-namespace AAK.FilArkiv.DTOs;
+namespace AAK.FilArkiv.FilArkivDTOs;
+
 internal record DocumentOverviewDto
 {
     [JsonPropertyName("id")]
@@ -17,5 +18,5 @@ internal record DocumentOverviewDto
     public DateTime? DocumentDate { get; set; }
 
     [JsonPropertyName("files")]
-    public IReadOnlyCollection<FileDto> FileDtos { get; set; } = new Collection<FileDto>();
+    public IReadOnlyCollection<FileDto> Files { get; set; } = new Collection<FileDto>();
 }

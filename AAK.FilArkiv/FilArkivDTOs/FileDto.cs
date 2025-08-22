@@ -1,6 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace AAK.FilArkiv.DTOs;
+namespace AAK.FilArkiv.FilArkivDTOs;
+
 internal record FileDto
 {
     [JsonPropertyName("id")]

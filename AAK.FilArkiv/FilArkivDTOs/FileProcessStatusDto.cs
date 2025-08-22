@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace AAK.FilArkiv.DTOs;
+namespace AAK.FilArkiv.FilArkivDTOs;
 internal record FileProcessStatusDto
 {
     [JsonPropertyName("isInQueue")]

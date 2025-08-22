@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
+using File = AAK.FilArkiv.Contracts.Models.File;
 
-namespace AAK.FilArkiv.Models;
+namespace AAK.FilArkiv.Contracts.Models;
 public record Document
 {
     public Guid Id { get; set; }
