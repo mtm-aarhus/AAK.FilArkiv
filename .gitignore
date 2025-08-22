@@ -362,5 +362,4 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /AAK.FilArkiv/nuget.config
-/ConsoleApp/appsettings.json
-/ConsoleApp/Program.cs
+/ConsoleApp/
