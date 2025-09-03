@@ -4,8 +4,11 @@ using AAK.FilArkiv.Features.CreateCase;
 using AAK.FilArkiv.Features.CreateDocument;
 using AAK.FilArkiv.Features.CreateFile;
 using AAK.FilArkiv.Features.GetCaseDocumentOverview;
+using AAK.FilArkiv.Features.GetDocument;
+using AAK.FilArkiv.Features.GetFile;
 using AAK.FilArkiv.Features.GetFileProcessStatus;
 using AAK.FilArkiv.Features.UploadFile;
+using File = AAK.FilArkiv.Contracts.Models.File;
 
 namespace AAK.FilArkiv;
 internal class FilArkivClient(HttpClient httpClient, AuthenticationService authenticationService) : IFilArkiv
@@ -16,4 +19,6 @@ internal class FilArkivClient(HttpClient httpClient, AuthenticationService authe
     public async Task UploadFile(UploadFileCommand command, CancellationToken cancellationToken = default) => await new UploadFileCommandHandler(httpClient, authenticationService).Handle(command, cancellationToken);
     public async Task<IReadOnlyCollection<Document>> GetCaseDocumentOverview(GetCaseDocumentOverviewQuery query, CancellationToken cancellationToken = default) => await new GetCaseDocumentOverviewQueryHandler(httpClient, authenticationService).Handle(query, cancellationToken);
     public async Task<FileProcessStatus> GetFileProcessStatus(GetFileProcessStatusQuery query, CancellationToken cancellationToken = default) => await new GetFileProcessStatusQueryHandler(httpClient, authenticationService).Handle(query, cancellationToken);
+    public async Task<Document?> GetDocument(GetDocumentQuery query, CancellationToken cancellationToken = default) => await new GetDocumentQueryHandler(httpClient, authenticationService).Handle(query, cancellationToken);
+    public async Task<IEnumerable<File>> GetFile(GetFileQuery query, CancellationToken cancellationToken = default) => await new GetFileQueryHandler(httpClient, authenticationService).Handle(query, cancellationToken);
 }

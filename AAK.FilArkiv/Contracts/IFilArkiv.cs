@@ -1,10 +1,14 @@
-﻿using AAK.FilArkiv.Contracts.Models;
+﻿using System.Net;
+using AAK.FilArkiv.Contracts.Models;
 using AAK.FilArkiv.Features.CreateCase;
 using AAK.FilArkiv.Features.CreateDocument;
 using AAK.FilArkiv.Features.CreateFile;
 using AAK.FilArkiv.Features.GetCaseDocumentOverview;
+using AAK.FilArkiv.Features.GetDocument;
+using AAK.FilArkiv.Features.GetFile;
 using AAK.FilArkiv.Features.GetFileProcessStatus;
 using AAK.FilArkiv.Features.UploadFile;
+using File = AAK.FilArkiv.Contracts.Models.File;
 
 namespace AAK.FilArkiv.Contracts;
 public interface IFilArkiv
@@ -15,5 +19,6 @@ public interface IFilArkiv
     Task UploadFile(UploadFileCommand command, CancellationToken cancellationToken = default);
     Task<IReadOnlyCollection<Document>> GetCaseDocumentOverview(GetCaseDocumentOverviewQuery query, CancellationToken cancellationToken = default);
     Task<FileProcessStatus> GetFileProcessStatus(GetFileProcessStatusQuery query, CancellationToken cancellationToken = default);
-    
+    Task<Document?> GetDocument(GetDocumentQuery query, CancellationToken cancellationToken = default);
+    Task<IEnumerable<File>> GetFile(GetFileQuery query, CancellationToken cancellationToken = default);
 }

@@ -25,7 +25,7 @@ internal class CreateFileCommandHandler(
         var request = new HttpRequestMessage
         {
             Method = HttpMethod.Post,
-            RequestUri = new Uri("files", UriKind.Relative),
+            RequestUri = new Uri("Files", UriKind.Relative),
             Content = Utils.StringContent(json),
             Headers =
             {

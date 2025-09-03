@@ -1,6 +1,4 @@
-﻿using System.Net.Http.Headers;
-
-namespace AAK.FilArkiv.Features.UploadFile;
+﻿namespace AAK.FilArkiv.Features.UploadFile;
 
 internal class UploadFileCommandHandler(
     HttpClient httpClient,
@@ -16,7 +14,7 @@ internal class UploadFileCommandHandler(
         using var requestMessage = new HttpRequestMessage();
         requestMessage.Method = HttpMethod.Post;
         requestMessage.Content = content;
-        requestMessage.RequestUri = new Uri($"fileio/upload/{command.FileId}", UriKind.Relative);
+        requestMessage.RequestUri = new Uri($"FileIO/Upload/{command.FileId}", UriKind.Relative);
         requestMessage.Headers.Authorization = Utils.AuthenticationHeader(token);
         
         var response = await httpClient.SendAsync(requestMessage, cancellationToken);

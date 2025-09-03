@@ -1,7 +1,7 @@
-﻿using System.Net.Http.Headers;
-using System.Text.Json;
+﻿using System.Text.Json;
 using AAK.FilArkiv.Contracts.Models;
 using AAK.FilArkiv.FilArkivDTOs;
+using Microsoft.AspNetCore.Http.Extensions;
 using File = AAK.FilArkiv.Contracts.Models.File;
 
 namespace AAK.FilArkiv.Features.GetCaseDocumentOverview;
@@ -10,20 +10,28 @@ internal class GetCaseDocumentOverviewQueryHandler(HttpClient httpClient, Authen
 {
     public async Task<IReadOnlyCollection<Document>> Handle(GetCaseDocumentOverviewQuery query, CancellationToken cancellationToken = default)
     {
+        const int pageSize = 50;
         var pageIndex = 1; // First page = pageIndex = 1
-        var pageSize = 50;
         var documents = new List<Document>();
 
         while (true)
         {
             var token = await authenticationService.Authenticate(cancellationToken);
+
+            var queryBuilder = new QueryBuilder
+            {
+                { "caseId", query.CaseId.ToString() },
+                { "pageSize", pageSize.ToString() },
+                { "pageIndex", pageIndex.ToString() }
+            };
+            
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"Documents/CaseDocumentOverview?caseId={query.CaseId}&pageSize={pageSize}&pageIndex={pageIndex}", UriKind.Relative),
+                RequestUri = new Uri(string.Concat("Documents/CaseDocumentOverview", queryBuilder.ToQueryString()), UriKind.Relative),
                 Headers =
                 {
-                    Authorization = new AuthenticationHeaderValue("Bearer", token)
+                    Authorization = Utils.AuthenticationHeader(token)
                 }
             };
 

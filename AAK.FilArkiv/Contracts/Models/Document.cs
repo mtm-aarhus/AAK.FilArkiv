@@ -1,12 +1,11 @@
-﻿using System.Collections.ObjectModel;
-using File = AAK.FilArkiv.Contracts.Models.File;
-
-namespace AAK.FilArkiv.Contracts.Models;
+﻿namespace AAK.FilArkiv.Contracts.Models;
 public record Document
 {
-    public Guid Id { get; set; }
-    public string Title { get; set; } = default!;
+    public Guid Id { get; init; }
+    public Guid CaseId { get; init; }
+    public string Title { get; set; } = string.Empty;
     public int? DocumentNumber { get; set; }
     public DateTime? DocumentDate { get; set; }
-    public IReadOnlyCollection<File> Files { get; set; } = new Collection<File>();
+    public string? DocumentReference { get; init; }
+    public IReadOnlyCollection<File>? Files { get; set; } = new List<File>();
 }

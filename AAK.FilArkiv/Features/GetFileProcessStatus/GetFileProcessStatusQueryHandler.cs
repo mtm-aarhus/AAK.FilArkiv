@@ -1,7 +1,7 @@
-﻿using System.Net.Http.Headers;
-using System.Text.Json;
+﻿using System.Text.Json;
 using AAK.FilArkiv.Contracts.Models;
 using AAK.FilArkiv.FilArkivDTOs;
+using Microsoft.AspNetCore.Http.Extensions;
 
 namespace AAK.FilArkiv.Features.GetFileProcessStatus;
 
@@ -12,14 +12,21 @@ internal class GetFileProcessStatusQueryHandler(
     public async Task<FileProcessStatus> Handle(GetFileProcessStatusQuery query, CancellationToken cancellationToken = default)
     {
         var token = await authenticationService.Authenticate(cancellationToken);
+
+        var queryBuilder = new QueryBuilder
+        {
+            { "fileId", query.FileId.ToString() }
+        };
+        
+        var url = string.Concat("FileProcess/FileProcessStatusFile", queryBuilder.ToQueryString());
         
         var request = new HttpRequestMessage
         {
             Method = HttpMethod.Get,
-            RequestUri = new Uri($"FileProcess/FileProcessStatusFile?fileId={query.FileId}", UriKind.Relative),
+            RequestUri = new Uri(url, UriKind.Relative),
             Headers =
             {
-                Authorization = new AuthenticationHeaderValue("Bearer", token)
+                Authorization = Utils.AuthenticationHeader(token)
             }
         };
 

@@ -1,6 +1,4 @@
-﻿using System.Net.Http.Headers;
-using System.Text;
-using System.Text.Json;
+﻿using System.Text.Json;
 using AAK.FilArkiv.FilArkivDTOs;
 
 namespace AAK.FilArkiv.Features.CreateCase;
@@ -29,7 +27,7 @@ internal class CreateCaseCommandHandler(HttpClient httpClient, AuthenticationSer
         {
             Method = HttpMethod.Post,
             Content = Utils.StringContent(json),
-            RequestUri = new Uri("cases", UriKind.Relative),
+            RequestUri = new Uri("Cases", UriKind.Relative),
             Headers =
             {
                 Authorization = Utils.AuthenticationHeader(token)
@@ -42,7 +40,10 @@ internal class CreateCaseCommandHandler(HttpClient httpClient, AuthenticationSer
         var responseBody = await response.Content.ReadAsStringAsync(cancellationToken);
         var responseObject = JsonSerializer.Deserialize<CaseDto>(responseBody, Utils.SerializerOptions);
 
-        var dto = new CreateCaseResponse(responseObject?.Id ?? Guid.Empty);
+        var dto = new CreateCaseResponse(
+            CaseId: responseObject?.Id ?? Guid.Empty,
+            ArchiveId: responseObject?.ArchiveId ?? Guid.Empty);
+        
         return dto;
     }
 }

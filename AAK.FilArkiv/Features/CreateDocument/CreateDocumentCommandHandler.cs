@@ -1,5 +1,4 @@
-﻿using System.Text;
-using System.Text.Json;
+﻿using System.Text.Json;
 using AAK.FilArkiv.FilArkivDTOs;
 
 namespace AAK.FilArkiv.Features.CreateDocument;
@@ -28,7 +27,7 @@ internal class CreateDocumentCommandHandler(
         var request = new HttpRequestMessage
         {
             Method = HttpMethod.Post,
-            RequestUri = new Uri("documents", UriKind.Relative),
+            RequestUri = new Uri("Documents", UriKind.Relative),
             Content = Utils.StringContent(json),
             Headers =
             {
