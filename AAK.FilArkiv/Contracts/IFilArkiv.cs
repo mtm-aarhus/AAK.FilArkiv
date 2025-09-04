@@ -1,5 +1,8 @@
 ﻿using System.Net;
 using AAK.FilArkiv.Contracts.Models;
+using AAK.FilArkiv.Features.AddAddressToCase;
+using AAK.FilArkiv.Features.AddBfeToCase;
+using AAK.FilArkiv.Features.AddMatrikelToCase;
 using AAK.FilArkiv.Features.CreateCase;
 using AAK.FilArkiv.Features.CreateDocument;
 using AAK.FilArkiv.Features.CreateFile;
@@ -21,4 +24,7 @@ public interface IFilArkiv
     Task<FileProcessStatus> GetFileProcessStatus(GetFileProcessStatusQuery query, CancellationToken cancellationToken = default);
     Task<Document?> GetDocument(GetDocumentQuery query, CancellationToken cancellationToken = default);
     Task<IEnumerable<File>> GetFile(GetFileQuery query, CancellationToken cancellationToken = default);
+    Task AddAddressToCase(AddAddressToCaseCommand command, CancellationToken cancellationToken = default);
+    Task AddBfeToCase(AddBfeToCaseCommand command, CancellationToken cancellationToken = default);
+    Task AddMatrikelToCase(AddMatrikelToCaseCommand command, CancellationToken cancellationToken = default);
 }

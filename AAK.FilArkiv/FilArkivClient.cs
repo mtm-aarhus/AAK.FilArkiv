@@ -1,5 +1,8 @@
 ﻿using AAK.FilArkiv.Contracts;
 using AAK.FilArkiv.Contracts.Models;
+using AAK.FilArkiv.Features.AddAddressToCase;
+using AAK.FilArkiv.Features.AddBfeToCase;
+using AAK.FilArkiv.Features.AddMatrikelToCase;
 using AAK.FilArkiv.Features.CreateCase;
 using AAK.FilArkiv.Features.CreateDocument;
 using AAK.FilArkiv.Features.CreateFile;
@@ -21,4 +24,7 @@ internal class FilArkivClient(HttpClient httpClient, AuthenticationService authe
     public async Task<FileProcessStatus> GetFileProcessStatus(GetFileProcessStatusQuery query, CancellationToken cancellationToken = default) => await new GetFileProcessStatusQueryHandler(httpClient, authenticationService).Handle(query, cancellationToken);
     public async Task<Document?> GetDocument(GetDocumentQuery query, CancellationToken cancellationToken = default) => await new GetDocumentQueryHandler(httpClient, authenticationService).Handle(query, cancellationToken);
     public async Task<IEnumerable<File>> GetFile(GetFileQuery query, CancellationToken cancellationToken = default) => await new GetFileQueryHandler(httpClient, authenticationService).Handle(query, cancellationToken);
+    public async Task AddAddressToCase(AddAddressToCaseCommand command, CancellationToken cancellationToken = default) => await new AddAddressToCaseCommandHandler(httpClient, authenticationService).Handle(command, cancellationToken);
+    public async Task AddBfeToCase(AddBfeToCaseCommand command, CancellationToken cancellationToken = default) => await new AddBfeToCaseCommandHandler(httpClient, authenticationService).Handle(command, cancellationToken);
+    public async Task AddMatrikelToCase(AddMatrikelToCaseCommand command, CancellationToken cancellationToken = default) => await new AddMatrikelToCaseCommandHandler(httpClient, authenticationService).Handle(command, cancellationToken);
 }
