@@ -19,6 +19,7 @@ public static class RegisterFilArkiv
         services.AddHttpClient(clientName, client =>
         {
             client.BaseAddress = new Uri(options.BaseAddress);
+            client.Timeout = TimeSpan.FromHours(1);
         });
 
         services.AddSingleton(serviceProvider =>
